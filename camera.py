@@ -21,7 +21,7 @@ import os
 
 from PIL import Image
 from numpy import zeros, uint8, uint32
-from cStringIO import StringIO
+from io import StringIO
 # ============= local library imports  ==========================
 from core import lib, TOUPCAM_EVENT_IMAGE, TOUPCAM_EVENT_STILLIMAGE, success, HToupCam
 
