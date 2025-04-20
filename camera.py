@@ -269,14 +269,55 @@ class ToupCamCamera(object):
     def set_size(self, w, h):
         self._lib_func('put_Size', ctypes.c_long(w), ctypes.c_long(h))
 
+class ToupCamController(ToupCamCamera):
+    def __init__(self):
+        ToupCamCamera.__init__(self)
+        self.count = 0
+
+    def open(self):
+        super().open()
+        print("ToupCam open.")
+
+    def close(self):
+        super().close()
+        print("ToupCam closed.")
+
+    def clean_count(self):
+        self.count = 0
+        print("Acquisition number reset to 0")
+
+    def save(self, path, extension='TIFF', *args, **kw):
+        path = str(path)+'\\'
+        super().save(p=path+str(self.count).zfill(5)+'.tif', extension=extension)
+        print(f"Image saved to {path+str(self.count).zfill(5)}.tif.")
+        self.count = self.count + 1
+
+class ToupCamEmulator():
+    def __init__(self):
+                self.count = 0
+
+    def open(self):
+        print("ToupCam open.")
+
+    def close(self):
+        print("ToupCam closed.")
+
+    def clean_count(self):
+        print("Acquisition number reset to 0")
+
+    def save(self, path, extension='TIFF', *args, **kw):
+        path = str(path)+'\\'
+        print(f"Image saved to {path + str(self.count).zfill(5)}tif.")
+        self.count = self.count + 1
 
 if __name__ == '__main__':
     import time
-    cam = ToupCamCamera()
+    cam = ToupCamController()
     cam.open()
     time.sleep(1)
-
-    cam.save('foo.jpg')
+    cam.save('C:\\Users\\zhenggroup\\Desktop\\New')
+    time.sleep(1)
+    cam.close()
 
 
 # ============= EOF =============================================
